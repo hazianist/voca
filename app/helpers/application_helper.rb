@@ -25,9 +25,10 @@ module ApplicationHelper
   end
 
   def locale_switch_url(locale_code)
-    path_params = request.path_parameters.symbolize_keys.except(:format)
-    query_params = request.query_parameters.symbolize_keys
-    url_for(path_params.merge(query_params).merge(locale: locale_code))
+    path_params = request.path_parameters.symbolize_keys.except(:format, :locale)
+    query_params = request.query_parameters.symbolize_keys.except(:locale)
+    merged_params = path_params.merge(query_params).merge(locale: locale_code)
+    url_for(merged_params)
   rescue ActionController::UrlGenerationError
     url_for(locale: locale_code, controller: controller_name, action: action_name)
   end

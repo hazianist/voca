@@ -1,40 +1,42 @@
-<section class="page-header">
+<div class="surface-card ranking-board">
+  <div class="page-header">
     <div>
-      <p class="eyebrow">Leaderboard</p>
-      <h1>랭킹</h1>
-      <p class="page-subtitle">전체 사용자 정답률을 직관적인 카드로 시각화했습니다.</p>
+      <p class="eyebrow"><%= t('rankings.index.eyebrow') %></p>
+      <h1><%= t('rankings.index.title') %></h1>
+      <p class="page-subtitle"><%= t('rankings.index.subtitle_html') %></p>
     </div>
-</section>
+  </div>
 
-<section class="ranking-index-box">
   <% if @user_correct_rates.present? %>
-    <table class="data-table">
-      <thead>
-        <tr>
-          <th>순위</th>
-          <th>사용자명</th>
-          <th>정답률</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @user_correct_rates.each_with_index do |data, index| %>
-          <tr class="<%= 'is-highlighted' if data[:user] == current_user %>">
-            <td><%= index + 1 %></td>
-            <td>
-              <% if data[:user] == current_user %>
-                <strong><%= data[:user].username %></strong>
-              <% else %>
-                <%= data[:user].username %>
-              <% end %>
-            </td>
-            <td><%= number_to_percentage(data[:correct_rate], precision: 2) %></td>
+    <div class="responsive-table">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th><%= t('rankings.index.table.position') %></th>
+            <th><%= t('rankings.index.table.user') %></th>
+            <th><%= t('rankings.index.table.rate') %></th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          <% @user_correct_rates.each_with_index do |data, index| %>
+            <tr class="<%= 'is-highlighted' if data[:user] == current_user %>">
+              <td><%= index + 1 %></td>
+              <td>
+                <% if data[:user] == current_user %>
+                  <strong><%= data[:user].username %></strong>
+                <% else %>
+                  <%= data[:user].username %>
+                <% end %>
+              </td>
+              <td><%= number_to_percentage(data[:correct_rate], precision: 2) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
   <% else %>
     <div class="empty-state">
-      <p>아직 집계된 랭킹 데이터가 없습니다. 퀴즈를 풀고 순위를 만들어보세요!</p>
+      <p><%= t('rankings.index.empty_state') %></p>
     </div>
   <% end %>
-</section>
+</div>

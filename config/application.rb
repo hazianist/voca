@@ -9,12 +9,12 @@ Bundler.require(*Rails.groups)
 module Practice
   class Application < Rails::Application
 
-    # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 7.1
+      # Initialize configuration defaults for originally generated Rails version.
+      config.load_defaults 7.1
 
-    config.i18n.available_locales = %i[ko ja]
-    config.i18n.default_locale = :ko
-    config.i18n.fallbacks = [:ko]
+      config.i18n.available_locales = %i[ko ja en]
+      config.i18n.default_locale = :ko
+      config.i18n.fallbacks = %i[ko ja en]
 
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.

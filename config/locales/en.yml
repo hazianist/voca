@@ -28,4 +28,148 @@
 #       enabled: "ON"
 
 en:
-  hello: "Hello world"
+  locales:
+    ko: "Korean"
+    ja: "Japanese"
+    en: "English"
+
+  layout:
+    brand:
+      title: "Wordbook"
+    user_chip:
+      label: "Learning today"
+      aria_label: "Signed-in user"
+    auth:
+      login: "Log in"
+      signup: "Sign up"
+      logout: "Log out"
+    nav:
+      primary_label: "Primary navigation"
+      main: "Home"
+      words: "Words"
+      tags: "Tags"
+      quizzes: "Quizzes"
+      rankings: "Rankings"
+    locale_switch:
+      label: "Language selector"
+
+  common:
+    actions:
+      edit: "Edit"
+      delete: "Delete"
+      view: "View"
+    confirmations:
+      delete_tag: "Are you sure you want to delete this tag?"
+      delete_quiz: "Delete this quiz?"
+    table:
+      empty: "No data available."
+
+  main_menu:
+    index:
+      eyebrow: "Study dashboard"
+      title: "Welcome back to your bilingual lab"
+      subtitle_html: "Track progress, jump back into quizzes, and organize the next study sprint."
+      actions:
+        to_words: "Open word list"
+        to_tags: "Organize tags"
+        to_quizzes: "Start a quiz"
+      stats:
+        title: "Today's snapshot"
+        words: "Saved words"
+        tags: "Active tags"
+        quizzes: "Quizzes taken"
+        accuracy: "Overall accuracy"
+      quick_actions:
+        title: "Quick actions"
+        continue_quiz: "Continue latest quiz"
+        create_quiz: "Create new quiz"
+        review_tags: "Review tag usage"
+        view_rankings: "Check leaderboard"
+      recent_quizzes:
+        title: "Recent quizzes"
+        empty: "No quizzes yet. Create your first quiz to see progress here."
+        score_label: "Score"
+        taken_on: "Taken on %{date}"
+        continue: "Continue"
+        review: "Review answers"
+      tag_trends:
+        title: "Frequently used tags"
+        empty: "Tag insights will appear after you start tagging words."
+        usage_label: "%{count} linked words"
+
+  tags:
+    index:
+      eyebrow: "Tag hub"
+      title: "My tag library"
+      subtitle_html: "Use search, sort, and filters to organize tags quickly."
+      empty_state: "No tags match the current filters."
+      search_placeholder: "Search by tag name or keyword"
+      search_button: "Search"
+      new_button: "New tag"
+      metrics:
+        total_tags: "Total tags"
+        tagged_words: "Tagged words"
+        heavy_tags: "Rich tags (5+ words)"
+        unused_tags: "Unused tags"
+      filters:
+        sort_label: "Sort"
+        usage_label: "Usage filter"
+        apply: "Apply filters"
+        reset: "Reset"
+        options:
+          recent: "Newest"
+          name: "Name (A-Z)"
+          usage: "Most used"
+        usage_options:
+          all: "All"
+          active: "5+ words"
+          unused: "No words"
+      table:
+        name: "Tag name"
+        created_at: "Created"
+        word_count: "Linked words"
+        actions: "Actions"
+        view: "Details"
+      recommendations:
+        title: "Top tags"
+        empty: "Usage data will appear after you start tagging."
+    form:
+      title_new: "Create tag"
+      title_edit: "Edit tag"
+      name_label: "Tag name"
+      placeholder: "e.g. Travel, Grammar"
+      submit: "Save tag"
+
+  quizzes:
+    index:
+      eyebrow: "Quiz workspace"
+      title: "Practice history"
+      subtitle_html: "Keep the streak going—restart or review any quiz."
+      actions:
+        start_new: "Start new quiz"
+      table:
+        number: "No."
+        title: "Title"
+        created_at: "Created"
+        score: "Score"
+        actions: "Actions"
+        pending_score: "Pending"
+        empty_title: "Untitled quiz"
+        view_results: "View results"
+        continue: "Continue"
+        restart: "Restart"
+        delete: "Delete"
+      empty_state:
+        title: "No quizzes yet"
+        body: "Generate a quiz to begin practicing with your saved words."
+
+  rankings:
+    index:
+      eyebrow: "Leaderboard"
+      title: "Accuracy rankings"
+      subtitle_html: "Compare correct-answer rates across all members."
+      table:
+        position: "Rank"
+        user: "User"
+        rate: "Accuracy"
+      empty_state: "No ranking data yet. Solve a quiz to appear here."

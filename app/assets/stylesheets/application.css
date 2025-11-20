@@ -241,6 +241,18 @@ a {
   padding: 2.25rem;
 }
 
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.section-header h2 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
 .tag-hub {
   display: flex;
   flex-direction: column;
@@ -360,6 +372,119 @@ label {
   align-items: center;
 }
 
+.form-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.home-hero {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.home-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+}
+
+.stat-chip {
+  padding: 1rem;
+  border-radius: var(--radius-md);
+  background: var(--toss-gray-50);
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.stat-chip--accent {
+  background: rgba(49, 130, 246, 0.12);
+}
+
+.stat-chip__label {
+  font-size: 0.85rem;
+  color: var(--toss-gray-500);
+}
+
+.stat-chip__value {
+  font-size: 1.6rem;
+}
+
+.quick-action-list,
+.recent-list,
+.tag-mini-list {
+  list-style: none;
+  margin: 1.25rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.quick-action-list__item,
+.recent-list__item,
+.tag-mini-list__item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--toss-gray-100);
+}
+
+.quick-action-list__item:last-child,
+.recent-list__item:last-child,
+.tag-mini-list__item:last-child {
+  border-bottom: none;
+}
+
+.quick-action-list__item p,
+.recent-list__item p,
+.tag-mini-list__item p {
+  margin: 0.15rem 0 0;
+  color: var(--toss-gray-500);
+  font-size: 0.9rem;
+}
+
+.recent-list__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.recent-list__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  justify-content: flex-end;
+}
+
+.quiz-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.ranking-board .page-header {
+  margin-bottom: 1rem;
+}
+
 .form-control,
 .form-select,
 input[type="text"],
@@ -422,6 +547,10 @@ textarea:focus {
 
 .data-table tbody tr:hover {
   background: var(--toss-gray-50);
+}
+
+.data-table tr.is-highlighted {
+  background: rgba(49, 130, 246, 0.08);
 }
 
 .data-table tbody tr:last-child td {
