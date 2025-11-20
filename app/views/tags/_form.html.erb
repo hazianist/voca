@@ -1,11 +1,20 @@
-<div class="tag-new-box">
-  <%= form_with(model: @tag, local: true) do |form| %>
-    <div class="tag-new-form-group">
-      <%= form.label :name %>
-      <%= form.text_field :name %>
+<% tag = local_assigns[:tag] || @tag %>
+
+<div class="surface-card tag-form">
+  <div class="section-header">
+    <h2><%= tag.new_record? ? t('tags.form.title_new') : t('tags.form.title_edit') %></h2>
+  </div>
+
+  <%= form_with(model: tag, local: true, html: { class: 'stacked-form' }) do |form| %>
+    <div class="form-group">
+      <%= form.label :name, t('tags.form.name_label') %>
+      <%= form.text_field :name,
+                          class: 'form-control',
+                          placeholder: t('tags.form.placeholder') %>
     </div>
-    <div class="tag-new-form-group">
-      <%= form.submit %>
+    <div class="form-actions">
+      <%= form.submit t('tags.form.submit'), class: 'btn btn--primary' %>
+      <%= link_to t('layout.nav.tags'), tags_path, class: 'btn btn--ghost' %>
     </div>
   <% end %>
 </div>

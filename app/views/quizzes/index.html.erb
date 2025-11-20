@@ -1,42 +1,58 @@
-<div class="quiz-index-box">
-  <p class="quiz-index-title">クイズ一覧</p>
-
-  <div class="quiz-index-all-btn">
-    <%= button_to '新しく単語帳を始める', create_quiz_path, method: :post, class: 'button' %>
+<div class="surface-card quiz-hub">
+  <div class="page-header">
+    <div>
+      <p class="eyebrow"><%= t('quizzes.index.eyebrow') %></p>
+      <h1><%= t('quizzes.index.title') %></h1>
+      <p class="page-subtitle"><%= t('quizzes.index.subtitle_html') %></p>
+    </div>
+    <div class="page-actions">
+      <%= button_to t('quizzes.index.actions.start_new'),
+                    create_quiz_path,
+                    method: :post,
+                    class: 'btn btn--primary' %>
+    </div>
   </div>
 
-  <div class="quiz-index-list">
-    <table class="table">
-      <thead>
-      <tr>
-        <th>NO</th>
-        <th>title</th>
-        <th>DATE</th>
-        <th>SCORE</th>
-        <th>Actions</th>
-      </tr>
-      </thead>
-
-      <tbody>
-      <% @quizzes.each_with_index do |quiz, index| %>
-        <tr>
-          <td><%= index + 1 + ((@quizzes.current_page - 1) * @quizzes.limit_value) %></td>
-          <td><%= quiz.title %></td>
-          <td><%= quiz.created_at.strftime("%Y-%m-%d %H:%M") %></td>
-          <td><%= quiz.score || '아직 채점되지 않음' %></td>
-          <td class="quiz-index-list-btn">
-            <%= link_to '回答を見る', results_quiz_path(quiz), class: 'button' %>
-            <%= link_to '続きから', continue_quiz_path(quiz), class: 'button' %>
-            <%= link_to 'もう一度やる', restart_quiz_path(quiz), class: 'button' %>
-<!--삭제버튼만 button_to를 쓴 이유는 link_to로 하면 삭제가 아니라 문제 응시페이지로 가기때문-->
-            <%= button_to '削除', quiz_path(quiz), method: :delete, data: { confirm: 'Are you sure?' } %>
-
-          </td>
-        </tr>
-      <% end %>
-      </tbody>
-    </table>
-  </div>
-
-  <%= paginate @quizzes %>
+  <% if @quizzes.any? %>
+    <div class="responsive-table">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th><%= t('quizzes.index.table.number') %></th>
+            <th><%= t('quizzes.index.table.title') %></th>
+            <th><%= t('quizzes.index.table.created_at') %></th>
+            <th><%= t('quizzes.index.table.score') %></th>
+            <th><%= t('quizzes.index.table.actions') %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% base_index = (@quizzes.current_page - 1) * @quizzes.limit_value %>
+          <% @quizzes.each_with_index do |quiz, index| %>
+            <tr>
+              <td><%= base_index + index + 1 %></td>
+              <td><%= quiz.title.presence || t('quizzes.index.table.empty_title') %></td>
+              <td><%= l(quiz.created_at, format: :short) %></td>
+              <td><%= quiz.score.present? ? quiz.score : t('quizzes.index.table.pending_score') %></td>
+              <td class="quiz-actions">
+                <%= link_to t('quizzes.index.table.view_results'), results_quiz_path(quiz), class: 'btn btn--ghost btn--sm' %>
+                <%= link_to t('quizzes.index.table.continue'), continue_quiz_path(quiz), class: 'btn btn--neutral btn--sm' %>
+                <%= link_to t('quizzes.index.table.restart'), restart_quiz_path(quiz), class: 'btn btn--neutral btn--sm' %>
+                <%= button_to t('quizzes.index.table.delete'),
+                              quiz_path(quiz),
+                              method: :delete,
+                              class: 'btn btn--danger btn--sm',
+                              data: { turbo_confirm: t('common.confirmations.delete_quiz') } %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <div class="pagination"><%= paginate @quizzes %></div>
+  <% else %>
+    <div class="empty-state">
+      <h3><%= t('quizzes.index.empty_state.title') %></h3>
+      <p><%= t('quizzes.index.empty_state.body') %></p>
+    </div>
+  <% end %>
 </div>

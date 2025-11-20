@@ -29,7 +29,11 @@ class ApplicationController < ActionController::Base
   end
 
   def default_url_options
-    super.merge(locale: I18n.locale)
+    options = super || {}
+    options = options.except(:locale)
+    return options if I18n.locale == I18n.default_locale
+
+    options.merge(locale: I18n.locale)
   end
 
   private
@@ -42,6 +46,7 @@ class ApplicationController < ActionController::Base
     locale = params[:locale]&.to_sym
     locale = session[:preferred_locale]&.to_sym unless supported_locales.include?(locale)
     locale ||= I18n.default_locale
+
     I18n.locale = supported_locales.include?(locale) ? locale : I18n.default_locale
     session[:preferred_locale] = I18n.locale
   end

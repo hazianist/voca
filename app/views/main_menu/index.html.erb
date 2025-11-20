@@ -1,13 +1,132 @@
+<div class="surface-card home-hero">
+  <p class="eyebrow"><%= t('main_menu.index.eyebrow') %></p>
+  <h1><%= t('main_menu.index.title') %></h1>
+  <p class="page-subtitle"><%= t('main_menu.index.subtitle_html') %></p>
+  <div class="home-hero__actions">
+    <%= link_to t('main_menu.index.actions.to_quizzes'), quizzes_path, class: 'btn btn--primary' %>
+    <%= link_to t('main_menu.index.actions.to_words'), words_path, class: 'btn btn--neutral' %>
+    <%= link_to t('main_menu.index.actions.to_tags'), tags_path, class: 'btn btn--ghost' %>
+  </div>
+</div>
 
-<!--<div class="main-container">-->
+<div class="dashboard-grid">
+  <section class="surface-card stat-panel">
+    <div class="section-header">
+      <h2><%= t('main_menu.index.stats.title') %></h2>
+    </div>
+    <div class="stat-grid">
+      <div class="stat-chip">
+        <span class="stat-chip__label"><%= t('main_menu.index.stats.words') %></span>
+        <strong class="stat-chip__value"><%= number_with_delimiter(@word_count) %></strong>
+      </div>
+      <div class="stat-chip">
+        <span class="stat-chip__label"><%= t('main_menu.index.stats.tags') %></span>
+        <strong class="stat-chip__value"><%= number_with_delimiter(@tag_count) %></strong>
+      </div>
+      <div class="stat-chip">
+        <span class="stat-chip__label"><%= t('main_menu.index.stats.quizzes') %></span>
+        <strong class="stat-chip__value"><%= number_with_delimiter(@quiz_count) %></strong>
+      </div>
+      <div class="stat-chip stat-chip--accent">
+        <span class="stat-chip__label"><%= t('main_menu.index.stats.accuracy') %></span>
+        <strong class="stat-chip__value"><%= number_to_percentage(@accuracy, precision: 1) %></strong>
+      </div>
+    </div>
+  </section>
 
-<!--  <div class="main-menu">-->
-<!--    <ul>-->
-<!--      <li><a href="<%#= words_path %>">単語マスタ</a></li>-->
-<!--      <li><a href="<%#= tags_path %>">単語タグマスタ</a></li>-->
-<!--      <li><a href="<%#= quizzes_path %>">単語帳</a></li>-->
-<!--      <li><a href="<%#= rankings_path %>">ランキング</a></li>-->
-<!--      <li><a href="<%#= logout_path %>" data-method="delete">ログアウト</a></li>-->
-<!--    </ul>-->
-<!--  </div>-->
-<!--</div>-->
+  <section class="surface-card quick-panel">
+    <div class="section-header">
+      <h2><%= t('main_menu.index.quick_actions.title') %></h2>
+    </div>
+    <ul class="quick-action-list">
+      <% latest_quiz = @recent_quizzes.first %>
+      <li class="quick-action-list__item">
+        <div>
+          <strong><%= t('main_menu.index.quick_actions.continue_quiz') %></strong>
+          <p><%= latest_quiz ? latest_quiz.title.presence || t('quizzes.index.table.empty_title') : t('main_menu.index.recent_quizzes.empty') %></p>
+        </div>
+        <%= link_to t('main_menu.index.quick_actions.continue_quiz'),
+                    latest_quiz ? continue_quiz_path(latest_quiz) : quizzes_path,
+                    class: 'btn btn--neutral btn--sm' %>
+      </li>
+      <li class="quick-action-list__item">
+        <div>
+          <strong><%= t('main_menu.index.quick_actions.create_quiz') %></strong>
+          <p><%= t('quizzes.index.subtitle_html') %></p>
+        </div>
+        <%= link_to t('quizzes.index.actions.start_new'),
+                    create_quiz_path,
+                    class: 'btn btn--primary btn--sm',
+                    data: { turbo_method: :post } %>
+      </li>
+      <li class="quick-action-list__item">
+        <div>
+          <strong><%= t('main_menu.index.quick_actions.review_tags') %></strong>
+          <p><%= t('tags.index.subtitle_html') %></p>
+        </div>
+        <%= link_to t('main_menu.index.quick_actions.review_tags'), tags_path, class: 'btn btn--ghost btn--sm' %>
+      </li>
+      <li class="quick-action-list__item">
+        <div>
+          <strong><%= t('main_menu.index.quick_actions.view_rankings') %></strong>
+          <p><%= t('rankings.index.subtitle_html') %></p>
+        </div>
+        <%= link_to t('main_menu.index.quick_actions.view_rankings'), rankings_path, class: 'btn btn--ghost btn--sm' %>
+      </li>
+    </ul>
+  </section>
+
+  <section class="surface-card recent-panel">
+    <div class="section-header">
+      <h2><%= t('main_menu.index.recent_quizzes.title') %></h2>
+    </div>
+    <% if @recent_quizzes.any? %>
+      <ul class="recent-list">
+        <% @recent_quizzes.each do |quiz| %>
+          <li class="recent-list__item">
+            <div>
+              <strong><%= quiz.title.presence || t('quizzes.index.table.empty_title') %></strong>
+              <p class="recent-list__meta">
+                <span><%= t('main_menu.index.recent_quizzes.score_label') %>: <%= quiz.score.present? ? quiz.score : t('quizzes.index.table.pending_score') %></span>
+                <span><%= t('main_menu.index.recent_quizzes.taken_on', date: l(quiz.created_at, format: :short)) %></span>
+              </p>
+            </div>
+            <div class="recent-list__actions">
+              <%= link_to t('main_menu.index.recent_quizzes.continue'), continue_quiz_path(quiz), class: 'btn btn--neutral btn--sm' %>
+              <%= link_to t('main_menu.index.recent_quizzes.review'), results_quiz_path(quiz), class: 'btn btn--ghost btn--sm' %>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p class="empty-state"><%= t('main_menu.index.recent_quizzes.empty') %></p>
+    <% end %>
+  </section>
+
+  <section class="surface-card tag-panel">
+    <div class="section-header">
+      <h2><%= t('main_menu.index.tag_trends.title') %></h2>
+    </div>
+    <% if @top_tags.any? %>
+      <% max_usage = [@top_tags.first.usage_count.to_i, 1].max %>
+      <ul class="tag-mini-list">
+        <% @top_tags.each do |tag| %>
+          <% usage_percent = ((tag.usage_count.to_f / max_usage) * 100).round %>
+          <li class="tag-mini-list__item">
+            <div>
+              <strong><%= tag.name %></strong>
+              <p class="tag-mini-list__meta">
+                <%= t('main_menu.index.tag_trends.usage_label', count: number_with_delimiter(tag.usage_count.to_i)) %>
+              </p>
+            </div>
+            <div class="usage-meter" role="presentation">
+              <span class="usage-meter__fill" style="width: <%= usage_percent %>%"></span>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p class="empty-state"><%= t('main_menu.index.tag_trends.empty') %></p>
+    <% end %>
+  </section>
+</div>
