@@ -1,45 +1,48 @@
 
 
-<div class="signup-container">
-  <%= form_with url: signup_path, model: @user, local: true do |form| %>
+<section class="signup-container">
+  <header class="auth-card__head">
+    <p class="eyebrow"><%= t('users.new.title') %></p>
+  </header>
+  <%= form_with url: signup_path, model: @user, local: true, html: { class: "stacked-form" } do |form| %>
     <div class="form-group">
-      <%= form.label :username, class: "form-label" %>
-      <%= form.text_field :username, class: "form-control", id: "username" %>
-      <div id="username-validation" class="validation-message">Username must be unique and present.</div>
+      <%= form.label :username, t('users.new.form.username_label'), class: "form-label" %>
+      <%= form.text_field :username, class: "form-control", id: "username", autocomplete: "username" %>
+      <div id="username-validation" class="validation-message"><%= t('users.new.validation.username') %></div>
     </div>
 
     <div class="form-group">
-      <%= form.label :email, class: "form-label" %>
-      <%= form.text_field :email, class: "form-control", id: "email" %>
-      <div id="email-validation" class="validation-message">Email must be unique and valid.</div>
+      <%= form.label :email, t('users.new.form.email_label'), class: "form-label" %>
+      <%= form.email_field :email, class: "form-control", id: "email", autocomplete: "email" %>
+      <div id="email-validation" class="validation-message"><%= t('users.new.validation.email') %></div>
     </div>
 
     <div class="form-group">
-      <%= form.label :password, class: "form-label" %>
-      <%= form.password_field :password, class: "form-control", id: "password" %>
-      <div id="password-validation" class="validation-message">Password must be between 1 and 8 characters.</div>
+      <%= form.label :password, t('users.new.form.password_label'), class: "form-label" %>
+      <%= form.password_field :password, class: "form-control", id: "password", autocomplete: "new-password" %>
+      <div id="password-validation" class="validation-message"><%= t('users.new.validation.password') %></div>
     </div>
 
     <div class="form-group">
-      <%= form.label :password_confirm, class: "form-label" %>
-      <%= form.password_field :password_confirm, class: "form-control", id: "password_confirm" %>
-      <div id="password-confirm-validation" class="validation-message">Passwords must match.</div>
+      <%= form.label :password_confirmation, t('users.new.form.password_confirmation_label'), class: "form-label" %>
+      <%= form.password_field :password_confirmation, class: "form-control", id: "password_confirmation", autocomplete: "new-password" %>
+      <div id="password-confirm-validation" class="validation-message"><%= t('users.new.validation.password_confirmation') %></div>
     </div>
 
     <%= form.hidden_field :highest_rate, value: 2 %>
 
     <div class="form-group">
-      <%= form.submit "Sign Up", class: "submit-button" %>
+      <%= form.submit t('users.new.form.submit'), class: "submit-button" %>
     </div>
   <% end %>
-</div>
+</section>
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         const usernameInput = document.getElementById('username');
         const emailInput = document.getElementById('email');
         const passwordInput = document.getElementById('password');
-        const passwordConfirmInput = document.getElementById('password_confirm');
+        const passwordConfirmInput = document.getElementById('password_confirmation');
 
         usernameInput.addEventListener('input', validateUsername);
         emailInput.addEventListener('input', validateEmail);

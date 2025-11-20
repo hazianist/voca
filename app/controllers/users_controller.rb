@@ -9,11 +9,11 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      flash.now[:alert] ='Successfully signed up!'
-      render action: root_path
+      sign_in(@user)
+      redirect_to main_menu_path, notice: t('users.create.success')
     else
-      flash.now[:alert] ='FAil!'
-      render :form
+      flash.now[:alert] = t('users.create.failure')
+      render :new, status: :unprocessable_entity
     end
   end
 

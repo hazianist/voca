@@ -2,7 +2,7 @@ ko:
   locales:
     ko: "한국어"
     ja: "日本語"
-      en: "English"
+    en: "English"
 
   layout:
     brand:
@@ -32,8 +32,41 @@ ko:
     confirmations:
       delete_tag: "이 태그를 삭제할까요?"
       delete_quiz: "이 퀴즈를 삭제할까요?"
-      table:
-        empty: "표시할 데이터가 없습니다."
+    table:
+      empty: "표시할 데이터가 없습니다."
+
+  main_menu:
+    index:
+      eyebrow: "학습 대시보드"
+      title: "이중언어 학습실에 다시 오신 것을 환영해요"
+      subtitle_html: "진행 상황을 확인하고 퀴즈와 태그 정리를 한 곳에서 시작하세요."
+      actions:
+        to_words: "단어장 열기"
+        to_tags: "태그 정리"
+        to_quizzes: "퀴즈 시작"
+      stats:
+        title: "오늘의 스냅샷"
+        words: "저장한 단어"
+        tags: "활성 태그"
+        quizzes: "완료한 퀴즈"
+        accuracy: "누적 정답률"
+      quick_actions:
+        title: "바로 가기"
+        continue_quiz: "가장 최근 퀴즈 이어하기"
+        create_quiz: "새 퀴즈 만들기"
+        review_tags: "태그 사용 현황 보기"
+        view_rankings: "랭킹 확인"
+      recent_quizzes:
+        title: "최근 퀴즈"
+        empty: "아직 퀴즈가 없습니다. 새로운 퀴즈를 시작해보세요."
+        score_label: "점수"
+        taken_on: "%{date} 진행"
+        continue: "이어하기"
+        review: "정답 확인"
+      tag_trends:
+        title: "자주 쓰는 태그"
+        empty: "단어에 태그를 달면 여기에서 추이를 볼 수 있어요."
+        usage_label: "연결된 단어 %{count}개"
 
   tags:
     index:
@@ -78,69 +111,68 @@ ko:
       placeholder: "예) 여행, 문법"
       submit: "저장하기"
 
-    main_menu:
-      index:
-        eyebrow: "학습 대시보드"
-        title: "이중언어 학습실에 다시 오신 것을 환영해요"
-        subtitle_html: "진행 상황을 확인하고 퀴즈와 태그 정리를 한 곳에서 시작하세요."
-        actions:
-          to_words: "단어장 열기"
-          to_tags: "태그 정리"
-          to_quizzes: "퀴즈 시작"
-        stats:
-          title: "오늘의 스냅샷"
-          words: "저장한 단어"
-          tags: "활성 태그"
-          quizzes: "완료한 퀴즈"
-          accuracy: "누적 정답률"
-        quick_actions:
-          title: "바로 가기"
-          continue_quiz: "가장 최근 퀴즈 이어하기"
-          create_quiz: "새 퀴즈 만들기"
-          review_tags: "태그 사용 현황 보기"
-          view_rankings: "랭킹 확인"
-        recent_quizzes:
-          title: "최근 퀴즈"
-          empty: "아직 퀴즈가 없습니다. 새로운 퀴즈를 시작해보세요."
-          score_label: "점수"
-          taken_on: "%{date} 진행"
-          continue: "이어하기"
-          review: "정답 확인"
-        tag_trends:
-          title: "자주 쓰는 태그"
-          empty: "단어에 태그를 달면 여기에서 추이를 볼 수 있어요."
-          usage_label: "연결된 단어 %{count}개"
+  quizzes:
+    index:
+      eyebrow: "퀴즈 허브"
+      title: "학습 기록"
+      subtitle_html: "최근 퀴즈를 이어풀고 결과를 빠르게 검토하세요."
+      actions:
+        start_new: "새 퀴즈 시작"
+      table:
+        number: "번호"
+        title: "제목"
+        created_at: "생성일"
+        score: "점수"
+        actions: "액션"
+        pending_score: "채점 전"
+        empty_title: "제목 없음"
+        view_results: "결과 보기"
+        continue: "이어하기"
+        restart: "다시 풀기"
+        delete: "삭제"
+      empty_state:
+        title: "등록된 퀴즈가 없습니다"
+        body: "단어장 기반 퀴즈를 생성해 학습을 시작하세요."
 
-    quizzes:
-      index:
-        eyebrow: "퀴즈 허브"
-        title: "학습 기록"
-        subtitle_html: "최근 퀴즈를 이어풀고 결과를 빠르게 검토하세요."
-        actions:
-          start_new: "새 퀴즈 시작"
-        table:
-          number: "번호"
-          title: "제목"
-          created_at: "생성일"
-          score: "점수"
-          actions: "액션"
-          pending_score: "채점 전"
-          empty_title: "제목 없음"
-          view_results: "결과 보기"
-          continue: "이어하기"
-          restart: "다시 풀기"
-          delete: "삭제"
-        empty_state:
-          title: "등록된 퀴즈가 없습니다"
-          body: "단어장 기반 퀴즈를 생성해 학습을 시작하세요."
+  rankings:
+    index:
+      eyebrow: "리더보드"
+      title: "정답률 랭킹"
+      subtitle_html: "모든 사용자의 정답률을 한눈에 비교하세요."
+      table:
+        position: "순위"
+        user: "사용자"
+        rate: "정답률"
+      empty_state: "아직 랭킹 데이터가 없습니다. 퀴즈를 풀고 순위를 만들어보세요!"
 
-    rankings:
-      index:
-        eyebrow: "리더보드"
-        title: "정답률 랭킹"
-        subtitle_html: "모든 사용자의 정답률을 한눈에 비교하세요."
-        table:
-          position: "순위"
-          user: "사용자"
-          rate: "정답률"
-        empty_state: "아직 랭킹 데이터가 없습니다. 퀴즈를 풀고 순위를 만들어보세요!"
+  sessions:
+    new:
+      eyebrow: "환영합니다"
+      title: "다시 공부를 이어가요"
+      subtitle: "이메일과 비밀번호를 입력하면 대시보드로 이동합니다."
+      form:
+        email_label: "이메일"
+        password_label: "비밀번호"
+        submit: "로그인"
+        signup_cta: "처음이신가요?"
+        signup_link: "회원가입"
+    create:
+      invalid_credentials: "이메일 또는 비밀번호가 올바르지 않습니다."
+
+  users:
+    new:
+      title: "계정 만들기"
+      form:
+        username_label: "사용자 이름"
+        email_label: "이메일"
+        password_label: "비밀번호"
+        password_confirmation_label: "비밀번호 확인"
+        submit: "회원가입"
+      validation:
+        username: "사용자 이름은 필수이며 고유해야 합니다."
+        email: "유효한 이메일을 입력하고 중복되지 않아야 합니다."
+        password: "비밀번호는 1~8자 사이여야 합니다."
+        password_confirmation: "비밀번호가 일치해야 합니다."
+    create:
+      success: "가입이 완료되었습니다! 이제 학습을 시작해볼까요?"
+      failure: "가입에 실패했습니다. 입력한 내용을 다시 확인해주세요."

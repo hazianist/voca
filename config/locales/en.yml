@@ -172,4 +172,36 @@ en:
         position: "Rank"
         user: "User"
         rate: "Accuracy"
-      empty_state: "No ranking data yet. Solve a quiz to appear here."
+        empty_state: "No ranking data yet. Solve a quiz to appear here."
+
+  sessions:
+    new:
+      eyebrow: "Welcome back"
+      title: "Pick up where you left off"
+      subtitle: "Enter your email and password to jump to the dashboard."
+      form:
+        email_label: "Email"
+        password_label: "Password"
+        submit: "Log in"
+        signup_cta: "New here?"
+        signup_link: "Sign up"
+    create:
+      invalid_credentials: "That email and password combination doesn’t match."
+
+  users:
+    new:
+      title: "Create your account"
+      form:
+        username_label: "Username"
+        email_label: "Email"
+        password_label: "Password"
+        password_confirmation_label: "Confirm password"
+        submit: "Sign up"
+      validation:
+        username: "Username must be unique and present."
+        email: "Email must be unique and valid."
+        password: "Password must be between 1 and 8 characters."
+        password_confirmation: "Passwords must match."
+    create:
+      success: "Welcome aboard! Your account is ready."
+      failure: "Sign up failed. Please review the highlighted fields."

@@ -32,8 +32,41 @@ ja:
     confirmations:
       delete_tag: "このタグを削除してもよろしいですか？"
       delete_quiz: "このクイズを削除しますか？"
-      table:
-        empty: "表示できるデータがありません。"
+    table:
+      empty: "表示できるデータがありません。"
+
+  main_menu:
+    index:
+      eyebrow: "学習ダッシュボード"
+      title: "バイリンガル学習室へようこそ"
+      subtitle_html: "進捗を確認し、クイズとタグ整理をここから始めましょう。"
+      actions:
+        to_words: "単語一覧へ"
+        to_tags: "タグ管理"
+        to_quizzes: "クイズを開始"
+      stats:
+        title: "今日のスナップショット"
+        words: "保存済み単語"
+        tags: "アクティブタグ"
+        quizzes: "実施したクイズ"
+        accuracy: "累計正答率"
+      quick_actions:
+        title: "クイックアクション"
+        continue_quiz: "最新クイズを再開"
+        create_quiz: "新しいクイズを作成"
+        review_tags: "タグの使用状況を見る"
+        view_rankings: "ランキングを見る"
+      recent_quizzes:
+        title: "最近のクイズ"
+        empty: "まだクイズがありません。まずはクイズを作成しましょう。"
+        score_label: "スコア"
+        taken_on: "%{date} に実施"
+        continue: "再開する"
+        review: "解答を確認"
+      tag_trends:
+        title: "よく使うタグ"
+        empty: "単語にタグを付けるとここに表示されます。"
+        usage_label: "%{count} 件の単語"
 
   tags:
     index:
@@ -78,69 +111,68 @@ ja:
       placeholder: "例）旅行、文法"
       submit: "保存する"
 
-    main_menu:
-      index:
-        eyebrow: "学習ダッシュボード"
-        title: "バイリンガル学習室へようこそ"
-        subtitle_html: "進捗を確認し、クイズとタグ整理をここから始めましょう。"
-        actions:
-          to_words: "単語一覧へ"
-          to_tags: "タグ管理"
-          to_quizzes: "クイズを開始"
-        stats:
-          title: "今日のスナップショット"
-          words: "保存済み単語"
-          tags: "アクティブタグ"
-          quizzes: "実施したクイズ"
-          accuracy: "累計正答率"
-        quick_actions:
-          title: "クイックアクション"
-          continue_quiz: "最新クイズを再開"
-          create_quiz: "新しいクイズを作成"
-          review_tags: "タグの使用状況を見る"
-          view_rankings: "ランキングを見る"
-        recent_quizzes:
-          title: "最近のクイズ"
-          empty: "まだクイズがありません。まずはクイズを作成しましょう。"
-          score_label: "スコア"
-          taken_on: "%{date} に実施"
-          continue: "再開する"
-          review: "解答を確認"
-        tag_trends:
-          title: "よく使うタグ"
-          empty: "単語にタグを付けるとここに表示されます。"
-          usage_label: "%{count} 件の単語"
+  quizzes:
+    index:
+      eyebrow: "クイズハブ"
+      title: "学習履歴"
+      subtitle_html: "最近のクイズを再開したり、結果を素早くチェックしましょう。"
+      actions:
+        start_new: "新しいクイズを開始"
+      table:
+        number: "No."
+        title: "タイトル"
+        created_at: "作成日"
+        score: "スコア"
+        actions: "操作"
+        pending_score: "採点待ち"
+        empty_title: "タイトル未設定"
+        view_results: "結果を見る"
+        continue: "再開"
+        restart: "やり直す"
+        delete: "削除"
+      empty_state:
+        title: "クイズがまだありません"
+        body: "保存した単語からクイズを作成して学習を始めましょう。"
 
-    quizzes:
-      index:
-        eyebrow: "クイズハブ"
-        title: "学習履歴"
-        subtitle_html: "最近のクイズを再開したり、結果を素早くチェックしましょう。"
-        actions:
-          start_new: "新しいクイズを開始"
-        table:
-          number: "No."
-          title: "タイトル"
-          created_at: "作成日"
-          score: "スコア"
-          actions: "操作"
-          pending_score: "採点待ち"
-          empty_title: "タイトル未設定"
-          view_results: "結果を見る"
-          continue: "再開"
-          restart: "やり直す"
-          delete: "削除"
-        empty_state:
-          title: "クイズがまだありません"
-          body: "保存した単語からクイズを作成して学習を始めましょう。"
+  rankings:
+    index:
+      eyebrow: "リーダーボード"
+      title: "正答率ランキング"
+      subtitle_html: "全ユーザーの正答率を比較できます。"
+      table:
+        position: "順位"
+        user: "ユーザー"
+        rate: "正答率"
+      empty_state: "まだランキングデータがありません。クイズに挑戦して順位に入りましょう！"
 
-    rankings:
-      index:
-        eyebrow: "リーダーボード"
-        title: "正答率ランキング"
-        subtitle_html: "全ユーザーの正答率を比較できます。"
-        table:
-          position: "順位"
-          user: "ユーザー"
-          rate: "正答率"
-        empty_state: "まだランキングデータがありません。クイズに挑戦して順位に入りましょう！"
+  sessions:
+    new:
+      eyebrow: "ようこそ"
+      title: "学習を再開しましょう"
+      subtitle: "メールアドレスとパスワードを入力するとダッシュボードへ移動します。"
+      form:
+        email_label: "メールアドレス"
+        password_label: "パスワード"
+        submit: "ログイン"
+        signup_cta: "はじめてですか？"
+        signup_link: "新規登録"
+    create:
+      invalid_credentials: "メールアドレスまたはパスワードが正しくありません。"
+
+  users:
+    new:
+      title: "アカウントを作成"
+      form:
+        username_label: "ユーザー名"
+        email_label: "メールアドレス"
+        password_label: "パスワード"
+        password_confirmation_label: "パスワード確認"
+        submit: "登録する"
+      validation:
+        username: "ユーザー名は必須で、他と重複できません。"
+        email: "有効なメールアドレスを入力し、重複しないようにしてください。"
+        password: "パスワードは1〜8文字で入力してください。"
+        password_confirmation: "パスワードを一致させてください。"
+    create:
+      success: "登録が完了しました。さっそく学習を始めましょう！"
+      failure: "登録に失敗しました。入力内容を確認してください。"
