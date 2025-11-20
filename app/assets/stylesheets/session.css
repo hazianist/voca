@@ -1,33 +1,22 @@
-.session-new-box{
-    width: 700px;
-    margin: 2rem auto;
-    padding: 1rem;
-    background-color: white;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-.session-new-form-group {
-    margin-bottom: 15px;
-}
-.form-label {
-    display: block;
-    margin-bottom: 5px;
-}
-.session-new-form-control {
-    width: 50%;
-    padding: 8px;
-    margin-bottom: 5px;
+.session-new-box {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 2.25rem;
+  background: var(--toss-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--toss-shadow);
 }
 
-.validation-message {
-    color: red;
-    font-size: 0.9em;
-    display: none; /* Initially hidden */
+.session-new-form-group {
+  margin-bottom: 1.25rem;
 }
-.valid {
-    display: block;
-    color: green;
+
+.session-new-form-control {
+  width: 100%;
 }
-.invalid {
-    display: block;
-    color: red;
+
+.auth-card__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 }

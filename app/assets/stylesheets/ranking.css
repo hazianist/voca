@@ -1,13 +1,19 @@
-.ranking-index-box{
-    width: 1200px;
-
-    margin: 2rem auto;
-    padding: 1rem;
-    background-color: white;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.ranking-index-box {
+  max-width: 960px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: var(--toss-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--toss-shadow);
 }
-.ranking-index-title{
-    font-size: 30px;
-    font-weight: bold;
-    text-align: center;
+
+.ranking-index-title {
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.data-table tr.is-highlighted {
+  background: var(--toss-blue-50);
 }

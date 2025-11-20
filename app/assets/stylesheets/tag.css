@@ -1,38 +1,31 @@
 .tag-index-box,
 .tag-new-box,
-.tag-show-box{
-    width: 1200px;
-    margin: 2rem auto;
-    padding: 1rem;
-    background-color: white;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.tag-show-box {
+  max-width: 960px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: var(--toss-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--toss-shadow);
 }
 
 .tag-index-title,
-.tag-show-title{
-    font-size: 30px;
-    font-weight: bold;
-    text-align: center;
+.tag-show-title {
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 1rem;
 }
 
-.tag-index-search {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.tag-index-search-field{
-    width: 100%;
-    display: flex;
-    gap: 1rem;
-}
-.tag-index-search-form{
-    width: 100%;
-
+.tag-index-search,
+.tag-new-form-group {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
 }
 
-.tag-new-form-group{
-    display: flex;
-    justify-content: center;
-    margin-bottom: 15px;
-
+.tag-index-search-field,
+.tag-index-search-form {
+  width: 100%;
 }

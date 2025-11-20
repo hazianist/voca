@@ -9,14 +9,11 @@ class QuestionsController < ApplicationController
 
   def update
     if @question.update(question_params)
-      @question.correct = @question.user_answer == @question.word.mean
-      @question.save
-
       @question.quiz.update_current_question(@question)
       @question.quiz.calculate_score
 
-      load_question_data(@question.quiz.current_question)
-      set_navigation_ids(@question.quiz.current_question) # 여기에서 호출
+      next_question = @question.quiz.current_question || @question
+      load_question_data(next_question)
 
       respond_to do |format|
         format.html { redirect_to quiz_path(@question.quiz) }
@@ -49,6 +46,7 @@ class QuestionsController < ApplicationController
     @correct_answer = @word.mean
     @wrong_answers = Word.where.not(id: @word.id).order("RANDOM()").limit(3).pluck(:mean)
     @choices = (@wrong_answers + [@correct_answer]).shuffle
+    set_navigation_ids(current_question)
   end
 
   def set_navigation_ids(current_question)
