@@ -1,8 +1,8 @@
 ja:
   locales:
-    ko: "韓国語"
     ja: "日本語"
-      en: "英語"
+    en: "英語"
+    ko: "韓国語"
 
   layout:
     brand:
