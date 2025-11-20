@@ -1,0 +1,69 @@
+ko:
+  locales:
+    ko: "한국어"
+    ja: "日本語"
+
+  layout:
+    brand:
+      title: "단어장"
+    user_chip:
+      label: "오늘도 학습 중"
+      aria_label: "현재 로그인한 사용자"
+    auth:
+      login: "로그인"
+      signup: "회원가입"
+      logout: "로그아웃"
+    nav:
+      primary_label: "주요 메뉴"
+      main: "메인"
+      words: "단어"
+      tags: "태그"
+      quizzes: "퀴즈"
+      rankings: "랭킹"
+    locale_switch:
+      label: "언어 변경"
+
+  common:
+    actions:
+      edit: "수정"
+      delete: "삭제"
+      view: "보기"
+    confirmations:
+      delete_tag: "이 태그를 삭제할까요?"
+
+  tags:
+    index:
+      eyebrow: "태그 허브"
+      title: "나의 태그 라이브러리"
+      subtitle_html: "검색, 정렬, 필터를 활용해 태그를 빠르게 관리하세요."
+      empty_state: "조건에 맞는 태그가 없습니다."
+      search_placeholder: "태그 이름 또는 키워드를 입력하세요"
+      search_button: "검색"
+      new_button: "새 태그"
+      metrics:
+        total_tags: "전체 태그"
+        tagged_words: "태그된 단어"
+        heavy_tags: "풍부한 태그 (5개 이상 단어)"
+        unused_tags: "미사용 태그"
+      filters:
+        sort_label: "정렬 기준"
+        usage_label: "사용량 필터"
+        apply: "필터 적용"
+        reset: "초기화"
+        options:
+          recent: "최신 생성순"
+          name: "가나다 순"
+          usage: "사용량 높은 순"
+        usage_options:
+          all: "전체"
+          active: "5개 이상 단어"
+          unused: "단어 없음"
+      table:
+        name: "태그명"
+        created_at: "생성일"
+        word_count: "연결된 단어"
+        actions: "바로가기"
+        view: "자세히"
+      recommendations:
+        title: "상위 사용 태그"
+        empty: "아직 태그 사용 데이터가 없습니다."

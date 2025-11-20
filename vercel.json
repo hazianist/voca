@@ -1,0 +1,22 @@
+{
+  "buildCommand": "yarn vercel-build",
+  "installCommand": "yarn install --frozen-lockfile",
+  "framework": null,
+  "functions": {
+    "api/index.rb": {
+      "runtime": "vercel-ruby@3.2.0",
+      "memory": 1024,
+      "maxDuration": 60
+    }
+  },
+  "routes": [
+    { "src": "/assets/(.*)", "dest": "/public/assets/$1" },
+    { "src": "/packs/(.*)", "dest": "/public/packs/$1" },
+    { "src": "/(.*)", "dest": "api/index.rb" }
+  ],
+  "env": {
+    "RAILS_ENV": "production",
+    "RAILS_MASTER_KEY": "@rails_master_key",
+    "DATABASE_URL": "@database_url"
+  }
+}
