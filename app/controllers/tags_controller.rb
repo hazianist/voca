@@ -2,11 +2,50 @@ class TagsController < ApplicationController
   before_action :require_login
 
   def index
-    @tags = current_user.tags.page(params[:page]).per(10)
-    if params[:search].present?
-      search_tag = "%#{params[:search]}%"
-      @tags = @tags.where('name LIKE ?', search_tag)
+    @search_term = params[:search].to_s.strip
+    @sort = params[:sort].presence_in(%w[recent name usage]) || 'recent'
+    @usage_filter = params[:usage].presence_in(%w[all active unused]) || 'all'
+    @filters_active = @search_term.present? || @sort != 'recent' || @usage_filter != 'all'
+
+    usage_counts_by_tag = current_user.tags.left_outer_joins(:taggings).group('tags.id').count
+    @metrics = {
+      total_tags: usage_counts_by_tag.length,
+      tagged_words: current_user.words.joins(:tags).distinct.count,
+      heavy_tags: usage_counts_by_tag.count { |_id, count| count >= Tag::HEAVY_USAGE_THRESHOLD },
+      unused_tags: usage_counts_by_tag.count { |_id, count| count.zero? }
+    }
+
+    scoped_tags = current_user.tags
+                              .left_outer_joins(:taggings)
+                              .select('tags.*, COUNT(taggings.id) AS usage_count')
+                              .group('tags.id')
+
+    scoped_tags = scoped_tags.where('tags.name LIKE ?', "%#{@search_term}%") if @search_term.present?
+
+    case @usage_filter
+    when 'active'
+      scoped_tags = scoped_tags.having('COUNT(taggings.id) >= ?', Tag::HEAVY_USAGE_THRESHOLD)
+    when 'unused'
+      scoped_tags = scoped_tags.having('COUNT(taggings.id) = 0')
     end
+
+    scoped_tags = case @sort
+                  when 'name'
+                    scoped_tags.order(Arel.sql('LOWER(tags.name) ASC'))
+                  when 'usage'
+                    scoped_tags.order(Arel.sql('usage_count DESC'))
+                  else
+                    scoped_tags.order(created_at: :desc)
+                  end
+
+    @tags = scoped_tags.page(params[:page]).per(10)
+
+    @top_tags = current_user.tags
+                            .left_outer_joins(:taggings)
+                            .select('tags.*, COUNT(taggings.id) AS usage_count')
+                            .group('tags.id')
+                            .order(Arel.sql('usage_count DESC'))
+                            .limit(5)
   end
 
   def new

@@ -1,49 +1,139 @@
-<div class="tag-index-box">
-
-<p class="tag-index-title">単語タグマスタ</p>
-
-<section class="tag-index-search">
-  <%= form_with(url: tags_path, method: "get", local: true, html: { class: "form" }) do |form| %>
-    <fieldset class="tag-index-search-field">
-      <%= form.text_field :search, class: "tag-index-search-form", placeholder: "検索キーワードを入力してください" %>
-      <%= form.submit "検索", class: "button" %>
-    </fieldset>
-  <% end %>
-</section>
-
-  <div class="tag-index-new">
-        <%= link_to "new", new_tag_path, class: "button" %>
+<div class="surface-card tag-hub">
+  <div class="page-header">
+    <div>
+      <p class="eyebrow"><%= t('tags.index.eyebrow') %></p>
+      <h1><%= t('tags.index.title') %></h1>
+      <p class="page-subtitle"><%= t('tags.index.subtitle_html') %></p>
+    </div>
+    <div class="page-actions">
+      <%= link_to t('tags.index.new_button'), new_tag_path, class: 'btn btn--primary' %>
+    </div>
   </div>
 
-  <table class="table">
-    <thead>
-    <tr>
-      <th>name</th>
-      <th>create date</th>
-      <th>word number</th>
-      <th>Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    <% @tags.each do |tag| %>
-      <tr>
-        <td><%= link_to tag.name, tag_path(tag) %></td>
-        <td><%= tag.created_at.strftime("%Y-%m-%d %H:%M") %></td>
-        <td><%= tag.words.count %></td>
+  <div class="tag-metrics-grid">
+    <div class="metric-card">
+      <span class="metric-card__label"><%= t('tags.index.metrics.total_tags') %></span>
+      <strong class="metric-card__value"><%= number_with_delimiter(@metrics[:total_tags]) %></strong>
+    </div>
+    <div class="metric-card">
+      <span class="metric-card__label"><%= t('tags.index.metrics.tagged_words') %></span>
+      <strong class="metric-card__value"><%= number_with_delimiter(@metrics[:tagged_words]) %></strong>
+    </div>
+    <div class="metric-card">
+      <span class="metric-card__label"><%= t('tags.index.metrics.heavy_tags') %></span>
+      <strong class="metric-card__value"><%= number_with_delimiter(@metrics[:heavy_tags]) %></strong>
+    </div>
+    <div class="metric-card metric-card--muted">
+      <span class="metric-card__label"><%= t('tags.index.metrics.unused_tags') %></span>
+      <strong class="metric-card__value"><%= number_with_delimiter(@metrics[:unused_tags]) %></strong>
+    </div>
+  </div>
 
-        <td>
-          <%= link_to "修正", edit_tag_path(tag), class: "button" %>
-
-          <!--삭제버튼만 button_to를 쓴 이유는 link_to로 하면 삭제가 아니라 문제 응시페이지로 가기때문-->
-          <%= button_to '削除', tag_path(tag), method: :delete, data: { confirm: 'Are you sure?' } %>
-        </td>
-      </tr>
+  <section class="tag-controls">
+    <%= form_with(url: tags_path, method: :get, local: true, html: { class: 'tag-controls__form' }) do |form| %>
+      <div class="tag-controls__search">
+        <%= form.text_field :search, value: @search_term, placeholder: t('tags.index.search_placeholder'), class: 'form-control' %>
+        <%= form.submit t('tags.index.search_button'), class: 'btn btn--neutral btn--sm' %>
+      </div>
+      <div class="tag-controls__select">
+        <label for="sort-select"><%= t('tags.index.filters.sort_label') %></label>
+        <%= form.select :sort,
+                        options_for_select([
+                          [t('tags.index.filters.options.recent'), 'recent'],
+                          [t('tags.index.filters.options.name'), 'name'],
+                          [t('tags.index.filters.options.usage'), 'usage']
+                        ], @sort),
+                        {},
+                        class: 'form-select', id: 'sort-select' %>
+      </div>
+      <div class="tag-controls__select">
+        <label for="usage-select"><%= t('tags.index.filters.usage_label') %></label>
+        <%= form.select :usage,
+                        options_for_select([
+                          [t('tags.index.filters.usage_options.all'), 'all'],
+                          [t('tags.index.filters.usage_options.active'), 'active'],
+                          [t('tags.index.filters.usage_options.unused'), 'unused']
+                        ], @usage_filter),
+                        {},
+                        class: 'form-select', id: 'usage-select' %>
+      </div>
+      <div class="tag-controls__actions">
+        <%= form.submit t('tags.index.filters.apply'), class: 'btn btn--primary btn--sm' %>
+        <% if @filters_active %>
+          <%= link_to t('tags.index.filters.reset'), tags_path, class: 'btn btn--ghost btn--sm' %>
+        <% end %>
+      </div>
     <% end %>
-    </tbody>
-  </table>
+  </section>
 
+  <div class="tag-grid">
+    <section class="tag-grid__main">
+      <% if @tags.any? %>
+        <div class="responsive-table">
+          <table class="data-table data-table--tags">
+            <thead>
+              <tr>
+                <th><%= t('tags.index.table.name') %></th>
+                <th><%= t('tags.index.table.created_at') %></th>
+                <th><%= t('tags.index.table.word_count') %></th>
+                <th><%= t('tags.index.table.actions') %></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @tags.each do |tag| %>
+                <tr>
+                  <td>
+                    <div class="tag-name-block">
+                      <strong><%= tag.name %></strong>
+                      <span class="tag-name-block__meta"><%= t('tags.index.table.view') %></span>
+                    </div>
+                  </td>
+                  <td><%= tag.created_at.strftime('%Y-%m-%d %H:%M') %></td>
+                  <td><%= number_with_delimiter(tag.usage_count) %></td>
+                  <td class="tag-actions">
+                    <%= link_to t('common.actions.view'), tag_path(tag), class: 'btn btn--ghost btn--sm' %>
+                    <%= link_to t('common.actions.edit'), edit_tag_path(tag), class: 'btn btn--neutral btn--sm' %>
+                    <%= button_to t('common.actions.delete'),
+                                  tag_path(tag),
+                                  method: :delete,
+                                  class: 'btn btn--danger btn--sm',
+                                  data: { turbo_confirm: t('common.confirmations.delete_tag') } %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+        <div class="pagination"><%= paginate @tags %></div>
+      <% else %>
+        <div class="empty-state"><%= t('tags.index.empty_state') %></div>
+      <% end %>
+    </section>
 
-<div class="pagination">
-<%= paginate @tags %>
+    <aside class="tag-grid__side tag-recommendations">
+      <h2><%= t('tags.index.recommendations.title') %></h2>
+      <% if @top_tags.any? %>
+        <% max_usage = [@top_tags.first&.usage_count.to_i, 1].max %>
+        <ul class="tag-recommendations__list">
+          <% @top_tags.each do |tag| %>
+            <% usage_percent = ((tag.usage_count.to_f / max_usage) * 100).round %>
+            <li class="tag-recommendations__item">
+              <div>
+                <strong><%= tag.name %></strong>
+                <p class="tag-recommendations__meta">
+                  <%= t('tags.index.table.word_count') %>
+                  <span><%= number_with_delimiter(tag.usage_count) %></span>
+                </p>
+              </div>
+              <div class="usage-meter" role="presentation">
+                <span class="usage-meter__fill" style="width: <%= usage_percent %>%"></span>
+              </div>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p class="tag-recommendations__empty"><%= t('tags.index.recommendations.empty') %></p>
+      <% end %>
+    </aside>
   </div>
 </div>

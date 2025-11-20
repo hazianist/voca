@@ -23,4 +23,16 @@ module ApplicationHelper
       'toast--info'
     end
   end
+
+  def locale_switch_url(locale_code)
+    path_params = request.path_parameters.symbolize_keys.except(:format)
+    query_params = request.query_parameters.symbolize_keys
+    url_for(path_params.merge(query_params).merge(locale: locale_code))
+  rescue ActionController::UrlGenerationError
+    url_for(locale: locale_code, controller: controller_name, action: action_name)
+  end
+
+  def locale_label(locale_code)
+    I18n.t("locales.#{locale_code}")
+  end
 end

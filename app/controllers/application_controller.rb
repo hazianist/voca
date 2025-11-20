@@ -1,9 +1,10 @@
 class ApplicationController < ActionController::Base
+  before_action :set_locale
   before_action :require_sign_in!
 
   protect_from_forgery with: :exception
 
-  helper_method :current_user
+  helper_method :current_user, :supported_locales
 
   def current_user
     @current_user ||= User.find_by(id: session[:user_id]) if session[:user_id]
@@ -23,9 +24,25 @@ class ApplicationController < ActionController::Base
     current_user.present?
   end
 
+  def supported_locales
+    I18n.available_locales
+  end
+
+  def default_url_options
+    super.merge(locale: I18n.locale)
+  end
+
   private
 
   def require_sign_in!
     redirect_to login_path unless signed_in?
+  end
+
+  def set_locale
+    locale = params[:locale]&.to_sym
+    locale = session[:preferred_locale]&.to_sym unless supported_locales.include?(locale)
+    locale ||= I18n.default_locale
+    I18n.locale = supported_locales.include?(locale) ? locale : I18n.default_locale
+    session[:preferred_locale] = I18n.locale
   end
 end

@@ -13,6 +13,8 @@
     "webpack-cli": "^5.1.4"
   },
   "scripts": {
-    "build": "webpack --config webpack.config.js"
+    "build": "webpack --config webpack.config.js",
+    "vercel-build": "sh -c '(bundle check || bundle install) && RAILS_ENV=production bundle exec rails assets:precompile'",
+    "vercel:serve": "RAILS_ENV=production bundle exec rails server -p ${PORT:-3000}"
   }
 }

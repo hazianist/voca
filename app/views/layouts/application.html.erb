@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<%= I18n.locale %>">
   <head>
     <meta charset="utf-8">
     <title>Voca</title>
@@ -10,51 +10,60 @@
     <meta name="csrf-param" content="<%= request_forgery_protection_token %>">
     <meta name="csrf-token" content="<%= form_authenticity_token %>">
 
-    <link rel="preconnect" href="https://cdn.jsdelivr.net">
-    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+      <link rel="preconnect" href="https://cdn.jsdelivr.net">
+      <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
 
-    <%= stylesheet_link_tag 'application', 'data-turbo-track': 'reload' %>
+      <%= stylesheet_link_tag 'application', 'data-turbo-track': 'reload' %>
 
-    <!--  아래 두 줄 삭제하면 cocoon 구동 안됨-->
-    <script src='https://unpkg.com/@oddcamp/cocoon-vanilla-js'></script>
-    <%= javascript_include_tag 'https://cdn.jsdelivr.net/npm/@oddcamp/cocoon-vanilla-js@1.1.3/index.min.js' %>
-  </head>
-  <body class="toss-body">
-    <div class="app-shell">
-      <header class="app-header">
-        <div class="app-header__brand">
-          <%= link_to(current_user ? main_menu_path : root_path, class: 'brand-link') do %>
-            <span>単語帳</span>
-          <% end %>
-          <p class="brand-subtitle">Study smarter with Toss-inspired clarity</p>
-        </div>
+      <!--  아래 두 줄 삭제하면 cocoon 구동 안됨-->
+      <script src='https://unpkg.com/@oddcamp/cocoon-vanilla-js'></script>
+      <%= javascript_include_tag 'https://cdn.jsdelivr.net/npm/@oddcamp/cocoon-vanilla-js@1.1.3/index.min.js' %>
+    </head>
+    <body class="toss-body">
+      <div class="app-shell">
+        <header class="app-header">
+          <div class="app-header__brand">
+            <%= link_to(current_user ? main_menu_path : root_path, class: 'brand-link') do %>
+              <span><%= t('layout.brand.title') %></span>
+            <% end %>
+          </div>
 
-        <% if current_user.present? %>
-          <nav class="primary-nav" aria-label="Primary">
-            <%= link_to '메인', main_menu_path, class: "nav-pill #{nav_active_class('main_menu')}" %>
-            <%= link_to '단어', words_path, class: "nav-pill #{nav_active_class('words')}" %>
-            <%= link_to '태그', tags_path, class: "nav-pill #{nav_active_class('tags')}" %>
-            <%= link_to '퀴즈', quizzes_path, class: "nav-pill #{nav_active_class('quizzes', 'questions')}" %>
-            <%= link_to '랭킹', rankings_path, class: "nav-pill #{nav_active_class('rankings')}" %>
-          </nav>
-          <div class="app-header__meta">
-            <div class="user-chip" aria-label="현재 로그인한 사용자">
-              <span class="user-chip__initial"><%= user_initial_for(current_user) %></span>
-              <div class="user-chip__text">
-                <span class="user-chip__label">Welcome back</span>
-                <strong class="user-chip__name"><%= display_name_for(current_user) %></strong>
+          <% if current_user.present? %>
+            <nav class="primary-nav" aria-label="<%= t('layout.nav.primary_label', default: 'primary navigation') %>">
+              <%= link_to t('layout.nav.main'), main_menu_path, class: "nav-pill #{nav_active_class('main_menu')}" %>
+              <%= link_to t('layout.nav.words'), words_path, class: "nav-pill #{nav_active_class('words')}" %>
+              <%= link_to t('layout.nav.tags'), tags_path, class: "nav-pill #{nav_active_class('tags')}" %>
+              <%= link_to t('layout.nav.quizzes'), quizzes_path, class: "nav-pill #{nav_active_class('quizzes', 'questions')}" %>
+              <%= link_to t('layout.nav.rankings'), rankings_path, class: "nav-pill #{nav_active_class('rankings')}" %>
+            </nav>
+            <div class="app-header__meta">
+              <div class="locale-switch" role="group" aria-label="<%= t('layout.locale_switch.label') %>">
+                <% supported_locales.each do |locale_code| %>
+                  <%= link_to locale_label(locale_code), locale_switch_url(locale_code), class: "locale-switch__btn #{'is-active' if I18n.locale == locale_code}" %>
+                <% end %>
               </div>
+              <div class="user-chip" aria-label="<%= t('layout.user_chip.aria_label', default: '현재 로그인한 사용자') %>">
+                <span class="user-chip__initial"><%= user_initial_for(current_user) %></span>
+                <div class="user-chip__text">
+                  <span class="user-chip__label"><%= t('layout.user_chip.label') %></span>
+                  <strong class="user-chip__name"><%= display_name_for(current_user) %></strong>
+                </div>
+              </div>
+              <%= link_to t('layout.auth.logout'), logout_path, class: 'btn btn--ghost', data: { turbo_method: :delete } %>
             </div>
-            <%= link_to '로그아웃', logout_path, class: 'btn btn--ghost', data: { turbo_method: :delete } %>
-          </div>
-        <% else %>
-          <div class="app-header__meta">
-            <%= link_to '로그인', login_path, class: 'btn btn--ghost' %>
-            <%= link_to '회원가입', signup_path, class: 'btn btn--primary' %>
-          </div>
-        <% end %>
-      </header>
+          <% else %>
+            <div class="app-header__meta">
+              <div class="locale-switch" role="group" aria-label="<%= t('layout.locale_switch.label') %>">
+                <% supported_locales.each do |locale_code| %>
+                  <%= link_to locale_label(locale_code), locale_switch_url(locale_code), class: "locale-switch__btn #{'is-active' if I18n.locale == locale_code}" %>
+                <% end %>
+              </div>
+              <%= link_to t('layout.auth.login'), login_path, class: 'btn btn--ghost' %>
+              <%= link_to t('layout.auth.signup'), signup_path, class: 'btn btn--primary' %>
+            </div>
+          <% end %>
+        </header>
 
       <% if flash.any? %>
         <section class="flash-region" aria-live="polite">
