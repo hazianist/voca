@@ -2,16 +2,20 @@ class SessionsController < ApplicationController
   skip_before_action :require_sign_in!, only: [:new, :create]
   before_action :set_user, only: [:create]
 
+  def new
+    redirect_to main_menu_path if signed_in?
+  end
+
   def create
-    if @user&.authenticate(params[:session][:password])
+    password = params.dig(:session, :password)
+    if @user&.authenticate(password)
       sign_in(@user)
       redirect_to main_menu_path
     else
-      flash.now[:danger] = 'Eメール/パスワードの組み合わせが無効です'
-      render :new
+      flash.now[:alert] = t('sessions.create.invalid_credentials')
+      render :new, status: :unauthorized
     end
   end
-
 
   def destroy
     sign_out
@@ -21,6 +25,7 @@ class SessionsController < ApplicationController
   private
 
   def set_user
-    @user = User.find_by(email: params[:session][:email].downcase)
+    email = params.dig(:session, :email).to_s.downcase
+    @user = User.find_by(email: email)
   end
 end
