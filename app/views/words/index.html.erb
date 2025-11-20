@@ -1,117 +1,89 @@
-<style>
-.title{
-    text-align: center;
-}
-    .container {
-        max-width: 1200px;
-        margin: 2rem auto;
-        padding: 1rem;
-        background-color: white;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
+<section class="page-header">
+  <div>
+    <p class="eyebrow">Word Library</p>
+    <h1>単語マスタ</h1>
+    <p class="page-subtitle">단어를 빠르게 검색하고 필요한 정보를 한눈에 확인하세요.</p>
+  </div>
+  <div class="page-actions">
+    <%= link_to "Export CSV", words_path(format: :csv, search: params[:search], column: params[:column]), class: "btn btn--ghost" %>
+    <%= link_to "새 단어 등록", new_word_path, class: "btn btn--primary" %>
+  </div>
+</section>
 
-.search-section {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.form-group {
-    display: flex;
-    justify-content: space-between;
-
-    align-items: center;
-    width: 100%;
-}
-    .search-container {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 1rem;
-    }
-
-    .menu ul {
-        list-style-type: none;
-        padding: 0;
-        display: flex;
-        justify-content: center;
-        gap: 1rem;
-    }
-    .menu ul li {
-        margin-right: 0;
-    }
-    .menu ul li a {
-        text-decoration: none;
-        color: #282c34;
-        padding: 0.5rem 1rem;
-        border-radius: 4px;
-        transition: background-color 0.3s;
-    }
-    .menu ul li a:hover {
-        background-color: #282c34;
-        color: white;
-    }
-</style>
-
-<h3 class="title">単語マスタ</h3>
-<div class="container">
-  <section class="search-section">
-    <div>
-      <%= form_with(url: words_path, method: "get", local: true, html: { class: "form" }) do |form| %>
-        <fieldset class="form-group">
-          <%= form.select :column, [['title', 'title'], ['mean', 'mean'], ['tag', 'tag'], ['similar', 'similar']], { include_blank: 'Select column...' }, class: "form-control half-width" %>
-          <%= form.text_field :search, placeholder: "検索キーワードを入力してください", class: "form-control full-width" %>
-          <%= form.submit "検索", class: "primary-button" %>
-        </fieldset>
-      <% end %>
+<section class="surface-card">
+  <%= form_with(url: words_path, method: :get, local: true, html: { class: "filter-bar" }) do |form| %>
+    <div class="filter-bar__group">
+      <%= form.label :column, "검색 기준" %>
+      <%= form.select :column,
+                      [['제목', 'title'], ['뜻', 'mean'], ['태그', 'tag'], ['유의어', 'similar']],
+                      { include_blank: '전체' },
+                      class: "form-select" %>
     </div>
-  </section>
-  <div class="search-container menu">
-    <ul>
-      <li>
+    <div class="filter-bar__group">
+      <%= form.label :search, "검색 키워드" %>
+      <%= form.text_field :search, placeholder: "키워드를 입력하세요", class: "form-control" %>
+    </div>
+    <div>
+      <label class="sr-only">검색 실행</label>
+      <%= form.submit "검색", class: "btn btn--neutral" %>
+    </div>
+  <% end %>
 
-          <%= link_to "Export", words_path(format: :csv, search: params[:search], column: params[:column]), class: "primary-button" %>
-      </li>
-      <li>
+  <% if @words.any? %>
+    <div class="responsive-table">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>단어</th>
+            <th>뜻</th>
+            <th>태그</th>
+            <th>유의어</th>
+            <th>생성일</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @words.each_with_index do |word, index| %>
+            <tr>
+              <td><%= index + 1 + ((@words.current_page - 1) * @words.limit_value) %></td>
+              <td><%= word.title %></td>
+              <td><%= word.mean %></td>
+              <td>
+                <% if word.tags.any? %>
+                  <% word.tags.each do |tag| %>
+                    <span class="tag-pill"><%= tag.name %></span>
+                  <% end %>
+                <% else %>
+                  <span class="tag-pill">-</span>
+                <% end %>
+              </td>
+              <td>
+                <% if word.similars.any? %>
+                  <%= word.similars.map(&:similar).join(', ') %>
+                <% else %>
+                  -
+                <% end %>
+              </td>
+              <td><%= word.created_at.strftime("%Y-%m-%d %H:%M") %></td>
+              <td>
+                <div class="page-actions">
+                  <%= link_to "편집", edit_word_path(word), class: "btn btn--ghost" %>
+                  <%= link_to "삭제", word_path(word), class: "btn btn--danger", data: { turbo_method: :delete, turbo_confirm: '정말 삭제할까요?' } %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
 
-          <%= link_to "New", new_word_path %>
-      </li>
-    </ul>
-  </div>
-
-  <table class="table">
-    <thead>
-    <tr>
-      <th>N°</th>
-      <th>title</th>
-      <th>mean</th>
-      <th>tag</th>
-      <th>similar word</th>
-      <th>create date</th>
-      <th>Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    <% @words.each_with_index do |word, index| %>
-      <tr>
-        <td><%= index + 1 + ((@words.current_page - 1) * @words.limit_value) %></td>
-        <td><%= word.title %></td>
-        <td><%= word.mean %></td>
-        <td>
-          <%= word.tags.map(&:name).join(', ') %>
-        </td>
-        <td>
-          <%= word.similars.map(&:similar).join(', ') %>
-        </td>
-        <td><%= word.created_at.strftime("%Y-%m-%d %H:%M") %></td>
-        <td><%= link_to "修正", edit_word_path(word), class: "button" %>
-
-          <!--삭제버튼만 button_to를 쓴 이유는 link_to로 하면 삭제가 아니라 문제 응시페이지로 가기때문-->
-          <%= button_to '削除', word_path(word), method: :delete, data: { confirm: 'Are you sure?' } %>
-      </tr>
-    <% end %>
-    </tbody>
-  </table>
-
-  <div class="pagination">
-    <%= paginate @words %>
-  </div>
-</div>
+    <div class="pagination">
+      <%= paginate @words %>
+    </div>
+  <% else %>
+    <div class="empty-state">
+      <p>등록된 단어가 없습니다. 상단의 ‘새 단어 등록’ 버튼으로 첫 단어를 추가해 보세요.</p>
+    </div>
+  <% end %>
+</section>

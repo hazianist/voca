@@ -1,40 +1,13 @@
 .signup-container {
-    max-width: 400px;
-    margin: auto;
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: var(--toss-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--toss-shadow);
 }
-.form-group {
-    margin-bottom: 15px;
-}
-.form-label {
-    display: block;
-    margin-bottom: 5px;
-}
-.form-control {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 5px;
-}
+
 .submit-button {
-    width: 100%;
-    padding: 10px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
-.submit-button:hover {
-    background-color: #0056b3;
-}
-.validation-message {
-    color: red;
-    font-size: 0.9em;
-    display: none; /* Initially hidden */
-}
-.valid {
-    display: block;
-    color: green;
-}
-.invalid {
-    display: block;
-    color: red;
+  width: 100%;
+  border: none;
 }

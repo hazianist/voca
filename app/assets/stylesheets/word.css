@@ -1,8 +1,25 @@
 .word-form-box,
-.word-show-box{
-    width: 1200px;
-    margin: 2rem auto;
-    padding: 1rem;
-    background-color: white;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.word-show-box {
+  max-width: 960px;
+  margin: 2.5rem auto;
+  padding: 2.25rem;
+  background: var(--toss-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--toss-shadow);
+}
+
+.word-form-box .form-control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.nested-fields-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.return-button {
+  margin-top: 1.5rem;
 }
